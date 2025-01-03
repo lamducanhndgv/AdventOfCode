@@ -14,15 +14,22 @@ def get_input():
         cookies={"session": os.environ.get("COOKIE_SESSION")}
     )
     response.raise_for_status()
-    
+
+    # Parse data    
     data = response.content.decode("utf-8").strip()
-    
-    # Parse data
     
     return data
 
 def solution():
-    ...
+    input_data = get_input()
+    pattern = re.compile(r"mul\((\d{1,3}),(\d{1,3})\)")
+    
+    total = 0
+    for match in pattern.finditer(input_data):
+        left, right = list(map(int, match.groups()))
+        total += left * right
+    print(total)
+    
     
 if __name__ == "__main__":
     solution()
