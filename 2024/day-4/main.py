@@ -25,7 +25,7 @@ def count_xmas_string(input_data, r, c, m, n):
     """
     Find the number of Xmas strings in 8 directions
     """
-    pattern = "XMAS"
+    pattern = "MAS"
     directions = [(0, 1), (1, 0), (1, 1), (-1, 0), (0, -1), (-1, -1), (1, -1), (-1, 1)]
     
     count = 0
@@ -35,12 +35,14 @@ def count_xmas_string(input_data, r, c, m, n):
         while c_index < len(pattern):
             new_r = new_r + dr
             new_c = new_c + dc
-            if 0 <= r < m and 0 <= c < n:
-                if input_data[r][c] == pattern[c_index]:
+            if 0 <= new_r < m and 0 <= new_c < n:
+                if input_data[new_r][new_c] == pattern[c_index]:
                     c_index += 1
                 else:
                     break
-        if c_index == len(pattern) - 1:
+            else:
+                break
+        if c_index == len(pattern):
             count += 1
     
     return count
