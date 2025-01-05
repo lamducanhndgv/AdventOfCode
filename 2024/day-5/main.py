@@ -17,12 +17,40 @@ def get_input():
 
     # Parse data    
     data = response.content.decode("utf-8").strip()
+    data = data.split("\n\n")
+    
+    data[0] = data[0].split("\n")
+    data[1] = data[1].split("\n")
     
     return data
 
+def is_valid(update, orders):
+    number = len(update)
+    for i in range(number):
+        for j in range(0, i):
+            if update[j] in orders and update[j] in orders[update[i]]:
+                return False
+    return True
+
 def solution():
-    input_data = get_input()
-    print(input_data)
+    rules, updates = get_input()
+    
+    result = 0
+    
+    orders = {}
+    for rule in rules:
+        before, after = list(map(int, rule.split('|')))
+        if before not in orders:
+            orders[before] = set()
+        orders[before].add(after)
+        
+    for update in updates:
+        update = list(map(int, update.split(',')))
+        if is_valid(update, orders):
+            result += update[len(update) // 2]
+    
+    print(result)
+        
     
 if __name__ == "__main__":
     solution()
