@@ -45,7 +45,22 @@ def solution():
     
     print(obstructions)
     print(guard_pos)
-                       
+    
+    direction = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+    direction_idx = 0
+    
+    steps = 0
+    while True:
+        dr, dc = direction[direction_idx]
+        new_row = guard_pos[0] + dr
+        new_col = guard_pos[1] + dc
+        
+        if new_row < 0 or new_row >= m or new_col < 0 or new_col >= n:
+            break
+        
+        if lab_map[new_row][new_col] == '#':
+            direction_idx = (direction_idx + 1) % 4
+            continue
     
 if __name__ == "__main__":
     solution()
