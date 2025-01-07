@@ -21,6 +21,7 @@ def get_input():
     data = response.content.decode("utf-8").strip()
     
     data = data.split('\n')
+    data = [list(row) for row in data]
     
     return data
 
@@ -49,7 +50,9 @@ def solution():
     direction = [(-1, 0), (0, 1), (1, 0), (0, -1)]
     direction_idx = 0
     
-    steps = 0
+    steps = 1
+    lab_map[guard_pos[0]][guard_pos[1]] = 'X'
+    
     while True:
         dr, dc = direction[direction_idx]
         new_row = guard_pos[0] + dr
@@ -61,6 +64,14 @@ def solution():
         if lab_map[new_row][new_col] == '#':
             direction_idx = (direction_idx + 1) % 4
             continue
+        
+        if lab_map[new_row][new_col] == '.':
+            steps += 1
+            lab_map[new_row][new_col] = 'X'
+            
+        guard_pos = (new_row, new_col)
+    
+    print(steps)
     
 if __name__ == "__main__":
     solution()
